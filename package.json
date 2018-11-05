@@ -1,0 +1,29 @@
+{
+  "name": "videobank",
+  "version": "1.0.0",
+  "description": "video bank",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hermelen/videobank.git"
+  },
+  "keywords": [
+    "video",
+    "bank"
+  ],
+  "author": "hermelen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hermelen/videobank/issues"
+  },
+  "homepage": "https://github.com/hermelen/videobank#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.5.0",
+    "bootstrap": "^4.1.3",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.4"
+  }
+}
