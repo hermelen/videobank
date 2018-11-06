@@ -11,7 +11,7 @@ class ActorForm(ModelForm):
 
 
 class MovieForm(ModelForm):
-    ActorFormset = formset_factory(ActorForm, extra=3)
+    ActorFormset = formset_factory(ActorForm, extra=1)
     class Meta:
         model = Movie
         fields = "__all__"

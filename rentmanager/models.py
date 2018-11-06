@@ -34,13 +34,14 @@ class MovieGenre(models.Model):
 
 
 class Actor(models.Model):
-    first_name = models.CharField(max_length=100, verbose_name="Prénom", null=True, blank=True)
-    last_name  = models.CharField(max_length=100, verbose_name="Nom", null=True, blank=True)
+    first_name = models.CharField(max_length=100, verbose_name="Prénom", default='unknown')
+    last_name  = models.CharField(max_length=100, verbose_name="Nom", default='unknown')
     picture    = models.ImageField(null=True, blank=True, upload_to="actors", verbose_name="Photo")
-    # movies     = models.ManyToManyField('Movie', blank=True)
+
 
     def __unicode__(self):
-        return self.last_name
+        display_name = self.first_name.capitalize() + ' ' + self.last_name.upper()
+        return display_name
 
 
 class Director(models.Model):
@@ -73,7 +74,7 @@ class Movie(models.Model):
     rented       = models.BooleanField()
     slug         = AutoSlugField(populate_from='title', verbose_name="Slug", null=True, blank=True, unique=True)
     synopsis     = models.TextField(null=True, blank=True)
-    title        = models.CharField(max_length=100, verbose_name="Titre")
+    title        = models.CharField(max_length=100, verbose_name="Titre", default='unknown')
     trailer_url  = models.URLField( null=True, blank=True)
 
 

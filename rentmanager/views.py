@@ -3,9 +3,12 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
+from django.utils.decorators import method_decorator #decorator
+from django.views.decorators.csrf import csrf_exempt #decorator
+
 from django.urls import reverse
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
@@ -35,11 +38,32 @@ class MovieDetailView(DetailView):
 #     fields = "__all__"
 
 
-
-class ActorsInline(InlineFormSetFactory):
-    # model = Movie.actors.through
+@method_decorator(csrf_exempt, name = 'dispatch')
+class ActorCreateView(CreateView):
     model = Actor
-    fields = ['__all__']
+    # fields = '__all__'
+    form_class = ActorForm
+
+    def post(self, request, **kwargs):
+        CreateView.post(self, request, kwargs)
+
+        return JsonResponse({
+            # "editable_data_url" : reverse("productlist-update", args=[self.object.id, 'quantity']),
+            # "del_button_data_url" : reverse("productlist-delete", args=[self.object.id]),
+
+            # "first_name" : self.object.first_name,
+            # "last_name" : self.object.last_name,
+            # "picture" : self.object.picture,
+            # "id": self.object.id
+
+            "first_name" : request.POST.get("form-0-first_name", ""),
+            "last_name" : request.POST.get("form-0-last_name", ""),
+            "picture" : request.POST.get("form-0-picture", "")
+        })
+
+    # def get_success_url(self):
+    #     return reverse("movie-create")
+
 
 
 
@@ -68,18 +92,19 @@ class MovieUpdateView(PermissionRequiredMixin, UpdateView):
 class MovieCreateView(CreateView):
     model = Movie
     form_class = MovieForm
+    # fields = "__all__"
 
-    def form_valid(self, request, *args, **kwargs):
-        first_name_0 = request.POST.get('form-0-first_name')
-        last_name_0  = request.POST.get('form-0-last_name')
-        picture_0 = request.POST.get('form-0-picture')
-        actor_0 = Actor.objects.create(first_name=first_name_0, last_name=last_name_0, picture=picture_0)
-
-        movieData = form.save(commit=False)
-        movieData.actors.add(actor_0)
-        movieData.save()
-
-        return CreateView.post(self, request, args, kwargs)
+    # def form_valid(self, request, *args, **kwargs):
+    #     first_name_0 = request.POST.get('form-0-first_name')
+    #     last_name_0  = request.POST.get('form-0-last_name')
+    #     picture_0 = request.POST.get('form-0-picture')
+    #     actor_0 = Actor.objects.create(first_name=first_name_0, last_name=last_name_0, picture=picture_0)
+    #
+    #     movieData = form.save(commit=False)
+    #     movieData.actors.add(actor_0)
+    #     movieData.save()
+    #
+    #     return CreateView.post(self, request, args, kwargs)
 
 
     def get_success_url(self):
