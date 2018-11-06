@@ -21,9 +21,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from rentmanager.views import MovieListView, MovieDetailView, MovieUpdateView, MovieCreateView
+from rentmanager.views import ActorCreateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
 
     url(r'^movie/create/', MovieCreateView.as_view(), name='movie-create'),
     url(r'^movie/(?P<slug>[-\w]+)/edit/$', MovieUpdateView.as_view(), name="movie-update"),

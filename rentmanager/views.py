@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from django.urls import reverse
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
@@ -36,51 +36,55 @@ class MovieDetailView(DetailView):
 
 
 
-class ActorsInline(InlineFormSetFactory):
-    # model = Movie.actors.through
+class ActorCreateView(PermissionRequiredMixin, CreateView):
     model = Actor
-    fields = ['__all__']
+    form_class = ActorForm
+    permission_required = 'rentmanager.add_actor'
+
+
+    def post(self, request, **kwargs):
+        CreateView.post(self, request, kwargs)
+        return JsonResponse({
+            # "editable_data_url" : reverse("Actor-update", args=[self.object.id, 'quantity']),
+            # "del_button_data_url" : reverse("Actor-delete", args=[self.object.id]),
+            "actor_first_name" : self.object.first_name,
+            "actor_last_name" : self.object.last_name,
+            "actor_id": self.object.id
+        })
+
+    def get_success_url(self):
+        return reverse("movie-create")
 
 
 
 class MovieUpdateView(PermissionRequiredMixin, UpdateView):
     model = Movie
     fields = "__all__"
-    permission_required = 'app.change_movie'
+    permission_required = 'movie.change_movie'
 
     def get_success_url(self):
         return reverse("movie-detail", args=[self.object.slug])
 
 
 
-    # def form_valid(self, request, form_class):
-    #     first_name_0 = request.POST.get('form-0-first_name')
-    #     last_name_0  = request.POST.get('form-0-last_name')
-    #     picture_0 = request.POST.get('form-0-picture')
-    #     actor_0 = Actor.objects.create(first_name=first_name_0, last_name=last_name_0, picture=picture_0)
-    #     context = self.get_context_data()
-    #
-    #     if form_class.is_valid():
-    #         self.object.add(actor_0)
-    #
-    #     return super(ProfileFamilyMemberCreate, self).form_valid(form)
-
-class MovieCreateView(CreateView):
+class MovieCreateView(CreateWithInlinesView):
     model = Movie
-    form_class = MovieForm
-
-    def form_valid(self, request, *args, **kwargs):
-        first_name_0 = request.POST.get('form-0-first_name')
-        last_name_0  = request.POST.get('form-0-last_name')
-        picture_0 = request.POST.get('form-0-picture')
-        actor_0 = Actor.objects.create(first_name=first_name_0, last_name=last_name_0, picture=picture_0)
-
-        movieData = form.save(commit=False)
-        movieData.actors.add(actor_0)
-        movieData.save()
-
-        return CreateView.post(self, request, args, kwargs)
-
+    # form_class = MovieForm
+    fields = "__all__"
+    permission_required = 'movie.add_movie'
 
     def get_success_url(self):
         return reverse("movie-detail", args=[self.object.slug])
+
+
+
+# class MovieCreateView(PermissionRequiredMixin, CreateView):
+#     model = Movie
+#     form_class = MovieForm
+#     # fields = "__all__"
+#     # success_url = '/'
+#     permission_required = 'rentmanager.add_movie'
+#
+#
+#     def get_success_url(self):
+#         return reverse("movie-detail", args=[self.object.slug])

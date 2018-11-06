@@ -73,8 +73,11 @@ class Movie(models.Model):
     rented       = models.BooleanField()
     slug         = AutoSlugField(populate_from='title', verbose_name="Slug", null=True, blank=True, unique=True)
     synopsis     = models.TextField(null=True, blank=True)
-    title        = models.CharField(max_length=100, verbose_name="Titre")
+    title        = models.CharField(max_length=100, verbose_name="Titre", null=True, blank=True)
     trailer_url  = models.URLField( null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
 
 
 
@@ -83,3 +86,6 @@ class MovieRent(models.Model):
     movies        = models.ForeignKey(Movie,on_delete=models.CASCADE)
     checkout_date = models.DateTimeField(auto_now=True)
     return_date   = models.DateTimeField()
+
+    # def __unicode__(self):
+    #     return self.name
