@@ -1,0 +1,24 @@
+{% extends "rentmanager/base.html" %}
+{% load static %}
+{% block content %}
+
+{% for movie in object_list %}
+<div class="card list-card">
+  <img class="card-img-top" src="{{ movie.picture.url }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ movie.title }}</h5>
+    <p class="card-text">{{ movie.synopsis }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ movie.genre }}</li>
+    <li class="list-group-item">{{ movie.release_date|date:'d-m-Y' }}</li>
+    <li class="list-group-item">{{ movie.director.first_name.capitalize }} {{ movie.director.last_name.capitalize }}</li>
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Réserver</a>
+    <a href="{% url 'movie-detail' movie.slug %}" class="card-link">Voir plus</a>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

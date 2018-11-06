@@ -1,0 +1,33 @@
+div.customized-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  // ------------------------------- movie_list.html ---------------------------
+  div.list-card {
+    width: 18rem;
+  }
+  // ------------------------------- movie_detail.html
+  div.detail-card {
+    h5 {
+      text-align: center;
+    }
+    div.card-body {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    img.float-image {
+    }
+    ul {
+      padding-left: 0;
+      li {
+        list-style: none;
+      }
+    }
+  }
+  div.customized-form {
+    display: flex;
+    flex-direction: column;
+  }
+}

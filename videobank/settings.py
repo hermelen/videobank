@@ -37,7 +37,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites', # for userena
+
+    'userena', # for userena
+    'guardian', # for userena
+    'easy_thumbnails', # for userena
+    'extra_views', # for InlineFormSet
+
+    'rentmanager',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = ( # for userena
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+ANONYMOUS_USER_NAME = "AnonymousUser"
+
+AUTH_PROFILE_MODULE = 'rentmanager.Customer'
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend' # for userena
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,15 +142,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-# MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "node_modules"),
 ]
 
-LOGIN_URL = "/login"
-LOGOUT_URL ="/logout"
+LOGIN_URL = "/accounts/login"
+LOGOUT_URL ="/accounts/logout"
 
 LOGIN_REDIRECT_URL = '/'
 

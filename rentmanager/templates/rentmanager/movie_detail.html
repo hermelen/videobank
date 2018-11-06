@@ -1,0 +1,39 @@
+{% extends "rentmanager/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="card detail-card">
+  <h5 class="card-title">{{ movie.title }}</h5>
+  <div class="card-body">
+    <img class="float-image" src="{{ movie.picture.url }}" alt="">
+      <ul>
+        <li class="">Catégorie: {{ movie.genre }}</li>
+        <li class="">Pays: {{ movie.country.name }}</li>
+        <li class="">Date de sortie: {{ movie.release_date|date:'d-m-Y' }}</li>
+        <li class="">Durée: {{ movie.lenght|date:'H:i' }}</li>
+      </ul>
+      <ul>
+        <li class="">Réalisateur: {{ movie.director.first_name.capitalize }} {{ movie.director.last_name.capitalize }}</li>
+        <li class="">Acteurs:</li>
+        {% for actor in movie.actors.all %}
+        <li class="">- {{ actor.first_name.capitalize }} {{ actor.last_name.capitalize }}</li>
+        {% endfor %}
+      </ul>
+  </div>
+  <div class="card-body">
+    <p class="">{{ movie.synopsis }}</p>
+  </div>
+  <div class="card-body">
+    {% if movie.rented == False %}
+    <a href="#" class="card-link">Réserver</a>
+    {% else %}
+    <p>LOUÉ</p>
+    {% endif %}
+    <a href="{{ movie.trailer_url }}">Trailer</a>
+  </div>
+  <div class="card-body">
+    <a href="{% url 'movie-update' movie.slug %}">Modifier</a>
+  </div>
+</div>
+
+{% endblock %}

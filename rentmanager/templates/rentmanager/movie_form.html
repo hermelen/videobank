@@ -1,0 +1,18 @@
+{% extends "rentmanager/base.html" %}
+{% load static %}
+{% block content %}
+  <form class="" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="customized-form">
+      {{ form.as_table }}
+      <div class="actors">
+        <p>Acteurs:<p>
+        <div class="actor">            
+          {% for inline in form.ActorFormset %}
+          {{ inline.as_p }}
+        </div>
+        {% endfor %}
+      </div>
+      <button type="submit" name="button">Enregistrer</button>
+    <div class="form-group">
+  </form>
+{% endblock %}
