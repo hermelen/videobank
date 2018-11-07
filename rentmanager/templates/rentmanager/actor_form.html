@@ -1,0 +1,10 @@
+{% extends "rentmanager/base.html" %}
+{% load static %}
+{% block content %}
+<form id="inline_actor_form" action="{% url 'actor-create' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+  <div class="customized-form">
+    {{ form.as_table }}
+    <button type="submit" name="button">Add new actor</button>
+  </div>
+</form>
+{% endblock %}

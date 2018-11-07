@@ -22,6 +22,10 @@ from .models import Movie, Actor, Director, Country, MovieGenre
 
 from .forms import ActorForm, MovieForm
 
+from django.db.models import Q
+
+from django.template import loader
+
 # Create your views here.
 
 class MovieListView(ListView):
@@ -41,28 +45,32 @@ class MovieDetailView(DetailView):
 @method_decorator(csrf_exempt, name = 'dispatch')
 class ActorCreateView(CreateView):
     model = Actor
-    # fields = '__all__'
     form_class = ActorForm
+    # fields = '__all__'
 
-    def post(self, request, **kwargs):
-        CreateView.post(self, request, kwargs)
+    def post(self, request, *args, **kwargs):
+        post_first_name=request.POST.get("form-0-first_name")
+        post_last_name = request.POST.get("form-0-last_name")
+        post_picture = request.POST.get("form-0-picture")
+        new_actor = Actor(
+            first_name= post_first_name,
+            last_name = post_last_name,
+            picture   = post_picture
+        )
+        new_actor.save()
+        queryset = Actor.objects.filter( Q(first_name=post_first_name) & Q(last_name=post_last_name) )
+        print(queryset)
+        for actor in queryset:
+            return JsonResponse({
+                "first_name" : actor.first_name,
+                "last_name" :  actor.last_name,
+                "pk":          actor.pk
+            })
+        # template = loader.get_template("movie_form.html")
+        # return HttpResponse(template.render())
 
-        return JsonResponse({
-            # "editable_data_url" : reverse("productlist-update", args=[self.object.id, 'quantity']),
-            # "del_button_data_url" : reverse("productlist-delete", args=[self.object.id]),
-
-            # "first_name" : self.object.first_name,
-            # "last_name" : self.object.last_name,
-            # "picture" : self.object.picture,
-            # "id": self.object.id
-
-            "first_name" : request.POST.get("form-0-first_name", ""),
-            "last_name" : request.POST.get("form-0-last_name", ""),
-            "picture" : request.POST.get("form-0-picture", "")
-        })
-
-    # def get_success_url(self):
-    #     return reverse("movie-create")
+    def get_success_url(self):
+        return reverse("movie-create")
 
 
 
@@ -91,7 +99,12 @@ class MovieUpdateView(PermissionRequiredMixin, UpdateView):
 
 class MovieCreateView(CreateView):
     model = Movie
+    # fields = "__all__"
     form_class = MovieForm
+    # template_name = 'rentmanager/movie_form.html'
+    # success_url = '/'
+    # inlines = [ActorCreateView,]
+
     # fields = "__all__"
 
     # def form_valid(self, request, *args, **kwargs):

@@ -1,10 +1,12 @@
 {% extends "rentmanager/base.html" %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
 <form id="inline_actor_form" action="{% url 'actor-create' %}" method="post" enctype="multipart/form-data">
-  <div class="customized-form">
+  <div class="customized-form">{% csrf_token %}
     {% for inline in form.ActorFormset %}
-    {{ inline.as_table }}
+
+    {{ inline.as_p }}
     {% endfor %}
     <button type="submit" name="button">Add new actor</button>
   </div>

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'easy_thumbnails', # for userena
     'extra_views', # for InlineFormSet
 
+    'widget_tweaks', # customize input
+
     'rentmanager',
 ]
 

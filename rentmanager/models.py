@@ -40,7 +40,7 @@ class Actor(models.Model):
 
 
     def __unicode__(self):
-        display_name = self.first_name.capitalize() + ' ' + self.last_name.upper()
+        display_name = self.last_name.upper() + ' ' + self.first_name.capitalize()
         return display_name
 
 
