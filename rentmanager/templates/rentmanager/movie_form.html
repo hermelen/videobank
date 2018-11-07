@@ -2,6 +2,7 @@
 {% load widget_tweaks %}
 {% load static %}
 {% block content %}
+<<<<<<< HEAD
 <form id="inline_actor_form" action="{% url 'actor-create' %}" method="post" enctype="multipart/form-data">
   <div class="customized-form">{% csrf_token %}
     {% for inline in form.ActorFormset %}
@@ -17,4 +18,37 @@
     <button type="submit" name="button">Enregistrer</button>
   <div class="form-group">
 </form>
+=======
+  <form id="movie_form" class="" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="customized-form">
+        <div class="actor">
+          <p>Create new actor record:<p>
+          {{ form.ActorFormset.as_table }}
+          <button id="inline_actor_form" action="{% url 'actor-create' %}" type="submit" name="button">Enregistrer</button>
+        </div>
+        <div class="movie">
+          {{ form.as_table }}
+        </div>
+      <button type="submit" name="button">Enregistrer</button>
+    </div>
+  </form>
+>>>>>>> f84b61470dfa7a7cea0c281dd06dc31fa820235b
 {% endblock %}
+
+<!-- <form id="actor_form" class="" action="{ url 'actor-create' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+  <div class="customized-form">
+    <div class="actor">
+      <p>Create new actor record:<p>
+        { form.ActorFormset.as_table }}
+      <button type="submit" name="button">Record New Actor</button>
+    </div>
+  </div>
+  <form id="movie_form" class="" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="customized-form">
+      <div class="movie">
+        { form.as_table }}
+      </div>
+      <button type="submit" name="button">Enregistrer</button>
+    </div>
+  </form>
+</form> -->

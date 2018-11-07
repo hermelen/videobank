@@ -2,7 +2,11 @@ div.customized-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+<<<<<<< HEAD
   // flex-direction: column;
+=======
+  background-color: grey;
+>>>>>>> f84b61470dfa7a7cea0c281dd06dc31fa820235b
 
   // ------------------------------- movie_list.html ---------------------------
   div.list-card {
@@ -28,7 +32,9 @@ div.customized-row {
     }
   }
   div.customized-form {
-    display: flex;
-    flex-direction: column;
+    div.new-actor, div.movie {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
