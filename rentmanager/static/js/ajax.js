@@ -1,22 +1,22 @@
-// $(document).ready(function(){
-//   $('#inline_actor_form').submit(function(event){
-//     event.preventDefault();
-//     var url = $(this).attr('action');
-//     $.ajax({
-//       url: url,
-//       type: 'POST',
-//       data: $(this),
-//       success: function(response){
-//         console.log('success');
-//         console.log(response);
-//       },
-//       error: function(response){
-//         console.log('error');
-//         console.log(response);
-//       }
-//     })
-//   })
-// })
+$(document).ready(function(){
+  $('#inline_actor_form').submit(function(event){
+    event.preventDefault();
+    var url = $(this).attr('action');
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: $(this).serialize(),
+      success: function(response){
+        console.log('success');
+        console.log(response);
+      },
+      error: function(response){
+        console.log('error');
+        console.log(response);
+      }
+    })
+  })
+})
 
 
 // $('#id_actors').append(`

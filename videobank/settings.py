@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'django.contrib.sites', # for userena
 
+    'rentmanager',
+
     'userena', # for userena
     'guardian', # for userena
     'easy_thumbnails', # for userena
@@ -47,7 +49,6 @@ INSTALLED_APPS = [
 
     'widget_tweaks', # customize input
 
-    'rentmanager',
 ]
 
 SITE_ID = 1
@@ -151,9 +152,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "node_modules"),
 ]
 
-LOGIN_URL = "/accounts/login"
-LOGOUT_URL ="/accounts/logout"
+LOGIN_URL = "/login"
+LOGOUT_URL ="/logout"
 
 LOGIN_REDIRECT_URL = '/'
+
+USERENA_ACTIVATION_REQUIRED = False
+USERENA_SIGNIN_AFTER_SIGNUP = True 
 
 from extra_settings import *

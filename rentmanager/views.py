@@ -58,14 +58,15 @@ class ActorCreateView(CreateView):
             picture   = post_picture
         )
         new_actor.save()
-        queryset = Actor.objects.filter( Q(first_name=post_first_name) & Q(last_name=post_last_name) )
+        # queryset = Actor.objects.filter( Q(first_name=post_first_name) & Q(last_name=post_last_name) )
+        queryset = Actor.objects.get( Q(first_name=post_first_name) & Q(last_name=post_last_name) )
         print(queryset)
-        for actor in queryset:
-            return JsonResponse({
-                "first_name" : actor.first_name,
-                "last_name" :  actor.last_name,
-                "pk":          actor.pk
-            })
+        # for actor in queryset:
+        return JsonResponse({
+            "first_name" : queryset.first_name,
+            "last_name" :  queryset.last_name,
+            "pk":          queryset.pk
+        })
         # template = loader.get_template("movie_form.html")
         # return HttpResponse(template.render())
 
@@ -87,7 +88,6 @@ class MovieUpdateView(PermissionRequiredMixin, UpdateView):
 
 class MovieCreateView(CreateWithInlinesView):
     model = Movie
-<<<<<<< HEAD
     # fields = "__all__"
     form_class = MovieForm
     # template_name = 'rentmanager/movie_form.html'
@@ -107,16 +107,6 @@ class MovieCreateView(CreateWithInlinesView):
     #     movieData.save()
     #
     #     return CreateView.post(self, request, args, kwargs)
-=======
-    # form_class = MovieForm
-    fields = "__all__"
-    permission_required = 'movie.add_movie'
-
-    def get_success_url(self):
-        return reverse("movie-detail", args=[self.object.slug])
-
->>>>>>> f84b61470dfa7a7cea0c281dd06dc31fa820235b
-
 
 # class MovieCreateView(PermissionRequiredMixin, CreateView):
 #     model = Movie

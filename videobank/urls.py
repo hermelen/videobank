@@ -23,6 +23,8 @@ from django.conf.urls.static import static
 from rentmanager.views import MovieListView, MovieDetailView, MovieUpdateView, MovieCreateView
 from rentmanager.views import ActorCreateView
 
+# from userena import views as userena_views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
@@ -33,8 +35,6 @@ urlpatterns = [
     url(r'^movie/(?P<slug>[-\w]+)/$', MovieDetailView.as_view(), name='movie-detail'),
 
     url(r'^accounts/', include('userena.urls')),
-    url(r'^accounts/login/$', auth_views.LoginView.as_view(), name='login'),
-    url(r'^accounts/logout/$', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
 
     url(r'^$', MovieListView.as_view(), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
