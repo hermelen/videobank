@@ -15,15 +15,6 @@ class Customer(UserenaBaseProfile):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'), related_name='my_profile')
 
 
-# GENRE = [
-#     ("action", "Action"),
-#     ("romance", "Romance"),
-#     ("science-fiction", "Science-Fiction"),
-#     ("comedie-musicale", "Comédie Musicale"),
-#     ("historique", "Historique"),
-#     ("arts-martiaux", "Arts-Martiaux"),
-# ]
-
 
 class MovieGenre(models.Model):
     label = models.CharField(max_length = 100, verbose_name="Genre", null=True, blank=True)
@@ -86,7 +77,7 @@ class MovieRent(models.Model):
     customer      = models.ForeignKey(Customer,on_delete=models.CASCADE)
     movies        = models.ForeignKey(Movie,on_delete=models.CASCADE)
     checkout_date = models.DateTimeField(auto_now=True)
-    return_date   = models.DateTimeField()
+    return_date   = models.DateTimeField(null=True, blank=True)
 
     # def __unicode__(self):
     #     return self.name

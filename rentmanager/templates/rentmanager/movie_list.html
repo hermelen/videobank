@@ -15,8 +15,12 @@
     <li class="list-group-item">{{ movie.director.first_name.capitalize }} {{ movie.director.last_name.capitalize }}</li>
   </ul>
   <div class="card-body">
-    <a href="#" class="card-link">Réserver</a>
-    <a href="{% url 'movie-detail' movie.slug %}" class="card-link">Voir plus</a>
+    {% if movie.rented == True %}
+    <a href="#" class="btn btn-danger">Loué</a>
+    {% else %}
+    <a href="{% url 'rent' movie.slug request.user.id %}" class="btn btn-success">Réserver</a>
+    {% endif %}
+    <a href="{% url 'movie-detail' movie.slug %}" class="btn btn-primary">Voir plus</a>
   </div>
 </div>
 {% endfor %}

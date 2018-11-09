@@ -2,11 +2,7 @@ div.customized-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-<<<<<<< HEAD
-  // flex-direction: column;
-=======
-  background-color: grey;
->>>>>>> f84b61470dfa7a7cea0c281dd06dc31fa820235b
+  // background-color: grey;
 
   // ------------------------------- movie_list.html ---------------------------
   div.list-card {
@@ -35,6 +31,24 @@ div.customized-row {
     div.new-actor, div.movie {
       display: flex;
       flex-direction: column;
+    }
+  }
+}
+
+// customize userena_profile
+ul#box-nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    padding: 1em;
+    a {
+      color: black;
+    }
+    a:hover {
+      text-decoration: none;
+      color: grey;
     }
   }
 }

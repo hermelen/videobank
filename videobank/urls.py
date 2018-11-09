@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rentmanager.views import MovieListView, MovieDetailView, MovieUpdateView, MovieCreateView
+from rentmanager.views import MovieListView, RentedListView, MovieDetailView, MovieUpdateView, MovieCreateView, rent_movie
 from rentmanager.views import ActorCreateView
 
 # from userena import views as userena_views
@@ -30,11 +30,14 @@ urlpatterns = [
 
     url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
 
+    url(r'^rented/', RentedListView.as_view(), name='rented'),
     url(r'^movie/create/', MovieCreateView.as_view(), name='movie-create'),
     url(r'^movie/(?P<slug>[-\w]+)/edit/$', MovieUpdateView.as_view(), name="movie-update"),
     url(r'^movie/(?P<slug>[-\w]+)/$', MovieDetailView.as_view(), name='movie-detail'),
 
     url(r'^accounts/', include('userena.urls')),
+
+    url(r'^rent/(?P<slug>[-\w]+)/(?P<id>[-\w]+)/$', rent_movie, name='rent'),
 
     url(r'^$', MovieListView.as_view(), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
