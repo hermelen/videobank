@@ -16,10 +16,10 @@
     <tr>
       <td>{{ movierent.movies.title }}</td>
       <td>{{ movierent.checkout_date|date:'d-m-Y' }}</td>
-      {% if movierent.return_date|length > 0 %}
+      {% if movierent.return_date %}
       <td>{{ movierent.return_date|date:'d-m-Y' }}</td>
       {% else %}
-      <td class="btn btn-success" style="width: 100%">Retour</td>
+      <td><a href="{% url 'return' movierent.movies.slug movierent.id %}" class="btn btn-success" style="width: 100%">Retour</a></td>
       {% endif %}
       <td>{{ movierent.customer.user.username }}</td>
     </tr>

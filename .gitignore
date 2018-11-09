@@ -1,5 +1,4 @@
 *.pyc
 /videobank/extra_settings.py
 /node_modules/
-/app/media/
 /app/static/.sass-cache

@@ -15,12 +15,18 @@
     <li class="list-group-item">{{ movie.director.first_name.capitalize }} {{ movie.director.last_name.capitalize }}</li>
   </ul>
   <div class="card-body">
+    {% if perms.rentmanager and perms.rentmanager.add_movie %}
+    <a href="{% url 'movie-update' movie.slug %}" class="btn btn-warning">Modifier</a>
+    <a href="{% url 'movie-delete' movie.slug %}" class="btn btn-danger">Supprimer</a>
+    {% else %}
     {% if movie.rented == True %}
+    <a href="{% url 'movie-detail' movie.slug %}" class="btn btn-primary">Voir plus</a>
     <a href="#" class="btn btn-danger">Loué</a>
     {% else %}
     <a href="{% url 'rent' movie.slug request.user.id %}" class="btn btn-success">Réserver</a>
     {% endif %}
-    <a href="{% url 'movie-detail' movie.slug %}" class="btn btn-primary">Voir plus</a>
+    {% endif %}
+
   </div>
 </div>
 {% endfor %}

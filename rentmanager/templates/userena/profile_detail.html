@@ -25,6 +25,10 @@
         <img class="mugshot" src="{{ profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}" />
         <dl>
           {% block profile_definition_list %}
+            {% if profile.user.username %}
+              <dt>{% trans "username" %}</dt>
+              <dd>{{ username }}</dd>
+            {% endif %}
             {% if profile.user.get_full_name %}
               <dt>{% trans "Name" %}</dt>
               <dd>{{ profile.user.get_full_name }}</dd>
@@ -69,7 +73,7 @@
         <tr>
           <td>{{ item.movies.title }}</td>
           <td>{{ item.checkout_date|date:'d-m-Y' }}</td>
-          {% if item.return_date|length > 0 %}
+          {% if item.return_date %}
           <td>{{ item.return_date|date:'d-m-Y' }}</td>
           {% else %}
           <td>A rendre</td>

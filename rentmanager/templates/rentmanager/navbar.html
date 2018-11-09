@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <a class="navbar-brand" href="{% url 'index' %}">La VHS à Papa</a>
+  <a class="navbar-brand" href="{% url 'availables' %}">La VHS à Papa</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -30,16 +30,20 @@
           Films
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'index' %}">Les films</a>
-          {% if perms.app and perms.app.add_movie %}
+          {% if perms.rentmanager and perms.rentmanager.add_movie %}
           <a class="dropdown-item" href="{% url 'movie-create' %}">Ajouter un film</a>
           <a class="dropdown-item" href="{% url 'rented' %}">Les films loués</a>
+          <a class="dropdown-item" href="{% url 'availables' %}">Les films disponibles</a>
+          <a class="dropdown-item" href="{% url 'all' %}">Tous les films</a>
+          <a class="dropdown-item" href="{% url 'rentmovie-list' %}">Locations</a>
+          {% else %}
+          <a class="dropdown-item" href="{% url 'availables' %}">Les films</a>
           {% endif %}
         </div>
       </li>
     </ul>
-    {% if request.resolver_match.url_name == "index" %}
-    <form class="form-inline" method="get" action="{% url 'index' %}">
+    <!-- {% if request.resolver_match.url_name == "availables" %}
+    <form class="form-inline" method="get" action="{% url 'availables' %}">
       <div class="input-group">
         <input name="q" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
         <div class="input-group-append">
@@ -49,6 +53,6 @@
         </div>
       </div>
     </form>
-    {% endif %}
+    {% endif %} -->
   </div>
 </nav>

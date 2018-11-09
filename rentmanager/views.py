@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 
 from django.utils.decorators import method_decorator #decorator
@@ -28,16 +30,24 @@ from django.db.models import Q
 from django.template import loader
 
 # Create your views here.
-class RentedListView(ListView):
+class RentedListView(ListView, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
     model = Movie
 
     def get_queryset(self):
         queryset = Movie.objects.filter(rented = True)
         return queryset
 
+class AvailableListView(ListView):
+    model = Movie
+
+    def get_queryset(self):
+        queryset = Movie.objects.filter(rented = False)
+        return queryset
 
 
-class MovieListView(ListView):
+class MovieListView(ListView, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
     model = Movie
 
 
@@ -48,7 +58,8 @@ class MovieDetailView(DetailView):
 
 
 @method_decorator(csrf_exempt, name = 'dispatch')
-class ActorCreateView(CreateView):
+class ActorCreateView(CreateView, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
     model = Actor
     form_class = ActorForm
 
@@ -75,18 +86,8 @@ class ActorCreateView(CreateView):
 
 
 
-
-class MovieUpdateView(PermissionRequiredMixin, UpdateView):
-    model = Movie
-    fields = "__all__"
-    permission_required = 'movie.change_movie'
-
-    def get_success_url(self):
-        return reverse("movie-detail", args=[self.object.slug])
-
-
-
 class MovieCreateView(CreateWithInlinesView):
+    permission_required = 'rentmanager.add_movie'
     model = Movie
     form_class = MovieForm
 
@@ -95,7 +96,28 @@ class MovieCreateView(CreateWithInlinesView):
 
 
 
+
+class MovieUpdateView(PermissionRequiredMixin, UpdateView):
+    model = Movie
+    fields = "__all__"
+    permission_required = 'rentmanager.add_movie'
+
+    def get_success_url(self):
+        return reverse("movie-detail", args=[self.object.slug])
+
+
+
+class MovieDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Movie
+    permission_required = 'rentmanager.add_movie'
+
+    def get_success_url(self):
+        return reverse("all")
+
+
+
 class MovieRentListView(ListView):
+    permission_required = 'rentmanager.add_movie'
     model = MovieRent
 
 
@@ -111,3 +133,17 @@ def rent_movie(request, slug, id):
     new_rent = MovieRent(movies=movie, customer=customer)
     new_rent.save()
     return redirect("userena_profile_detail", username=customer.user.username)
+
+
+
+def return_movie(request, slug, id):
+    movie = Movie.objects.get(slug=slug)
+    movierent = MovieRent.objects.get(id=id)
+
+    movie.rented = False
+    movierent.return_date = datetime.now()
+
+    movie.save()
+    movierent.save()
+
+    return redirect("rentmovie-list")

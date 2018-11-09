@@ -20,8 +20,10 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rentmanager.views import MovieListView, RentedListView, MovieDetailView, MovieUpdateView, MovieCreateView, rent_movie
+from rentmanager.views import MovieListView, RentedListView, AvailableListView
+from rentmanager.views import MovieDetailView, MovieUpdateView, MovieCreateView, MovieDeleteView
 from rentmanager.views import ActorCreateView, MovieRentListView
+from rentmanager.views import rent_movie, return_movie
 
 # from userena import views as userena_views
 
@@ -29,16 +31,22 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
-
+    # movie list
     url(r'^rented/', RentedListView.as_view(), name='rented'),
+    url(r'^movies$', MovieListView.as_view(), name='all'),
+    # movie edit
     url(r'^movie/create/', MovieCreateView.as_view(), name='movie-create'),
-    url(r'^movie/(?P<slug>[-\w]+)/edit/$', MovieUpdateView.as_view(), name="movie-update"),
+    #movie detail
+    url(r'^movie/(?P<slug>[-\w]+)/edit/$', MovieUpdateView.as_view(), name='movie-update'),
+    url(r'^movie/(?P<slug>[-\w]+)/delete/$', MovieDeleteView.as_view(), name='movie-delete'),
     url(r'^movie/(?P<slug>[-\w]+)/$', MovieDetailView.as_view(), name='movie-detail'),
-
+    # userena
     url(r'^accounts/', include('userena.urls')),
-
-    url(r'rent/list/', MovieRentListView.as_view(), name='rentmovie-list'),
+    # rent list
+    url(r'^rent/list/', MovieRentListView.as_view(), name='rentmovie-list'),
+    # rent action
     url(r'^rent/(?P<slug>[-\w]+)/(?P<id>[-\w]+)/$', rent_movie, name='rent'),
+    url(r'^return/(?P<slug>[-\w]+)/(?P<id>[-\w]+)/$', return_movie, name='return'),
 
-    url(r'^$', MovieListView.as_view(), name='index'),
+    url(r'^$', AvailableListView.as_view(), name='availables'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
