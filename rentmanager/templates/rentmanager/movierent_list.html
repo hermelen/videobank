@@ -1,0 +1,30 @@
+{% extends "rentmanager/base.html" %}
+{% load static %}
+{% block content %}
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Date de location</th>
+      <th scope="col">Date de retour</th>
+      <th scope="col">Customer</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for movierent in object_list %}
+    <tr>
+      <td>{{ movierent.movies.title }}</td>
+      <td>{{ movierent.checkout_date|date:'d-m-Y' }}</td>
+      {% if movierent.return_date|length > 0 %}
+      <td>{{ movierent.return_date|date:'d-m-Y' }}</td>
+      {% else %}
+      <td class="btn btn-success" style="width: 100%">Retour</td>
+      {% endif %}
+      <td>{{ movierent.customer.user.username }}</td>
+    </tr>
+  {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

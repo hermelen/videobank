@@ -95,6 +95,11 @@ class MovieCreateView(CreateWithInlinesView):
 
 
 
+class MovieRentListView(ListView):
+    model = MovieRent
+
+
+
 def rent_movie(request, slug, id):
     model = MovieRent
     movie = Movie.objects.get(slug=slug)
