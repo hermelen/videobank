@@ -21,9 +21,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView,  InlineFormSetFactory
 from extra_views.generic import GenericInlineFormSetFactory, GenericInlineFormSet
 
-from .models import Movie, Actor, Director, Country, MovieGenre, MovieRent, Customer
+from .models import Movie, Actor, Director, Country, MovieGenre, MovieRent, Customer, Director, Country
 
-from .forms import ActorForm, MovieForm
+from .forms import ActorForm, MovieForm, DirectorForm, CountryForm
 
 from django.db.models import Q
 
@@ -74,11 +74,11 @@ class ActorCreateView(CreateView, PermissionRequiredMixin):
         )
         new_actor.save()
         queryset = Actor.objects.get( Q(first_name=post_first_name) & Q(last_name=post_last_name) )
-        print(queryset)
         return JsonResponse({
+            "type"       : "actor",
             "first_name" : queryset.first_name,
-            "last_name" :  queryset.last_name,
-            "pk":          queryset.pk
+            "last_name"  : queryset.last_name,
+            "pk"         : queryset.pk
         })
 
     def get_success_url(self):
@@ -86,7 +86,60 @@ class ActorCreateView(CreateView, PermissionRequiredMixin):
 
 
 
-class MovieCreateView(CreateWithInlinesView):
+@method_decorator(csrf_exempt, name = 'dispatch')
+class DirectorCreateView(CreateView, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
+    model = Director
+    form_class = DirectorForm
+
+    def post(self, request, *args, **kwargs):
+        post_first_name=request.POST.get("form-0-first_name")
+        post_last_name = request.POST.get("form-0-last_name")
+        post_picture = request.POST.get("form-0-picture")
+        new_director = Director(
+            first_name= post_first_name,
+            last_name = post_last_name,
+            picture   = post_picture
+        )
+        new_director.save()
+        queryset = Director.objects.get( Q(first_name=post_first_name) & Q(last_name=post_last_name) )
+        return JsonResponse({
+            "type"       : "director",
+            "first_name" : queryset.first_name,
+            "last_name"  : queryset.last_name,
+            "pk"         : queryset.pk
+        })
+
+    def get_success_url(self):
+        return reverse("movie-create")
+
+
+
+@method_decorator(csrf_exempt, name = 'dispatch')
+class CountryCreateView(CreateView, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
+    model = Country
+    form_class = CountryForm
+
+    def post(self, request, *args, **kwargs):
+        post_name=request.POST.get("form-0-name")
+        new_country = Country(
+            name= post_name,
+        )
+        new_country.save()
+        queryset = Country.objects.get( name=post_name )
+        return JsonResponse({
+            "type" : "country",
+            "name" : queryset.name,
+            "pk"   : queryset.pk
+        })
+
+    def get_success_url(self):
+        return reverse("movie-create")
+
+
+
+class MovieCreateView(CreateWithInlinesView, PermissionRequiredMixin):
     permission_required = 'rentmanager.add_movie'
     model = Movie
     form_class = MovieForm
@@ -97,26 +150,26 @@ class MovieCreateView(CreateWithInlinesView):
 
 
 
-class MovieUpdateView(PermissionRequiredMixin, UpdateView):
+class MovieUpdateView(UpdateView, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
     model = Movie
     fields = "__all__"
-    permission_required = 'rentmanager.add_movie'
 
     def get_success_url(self):
         return reverse("movie-detail", args=[self.object.slug])
 
 
 
-class MovieDeleteView(PermissionRequiredMixin, DeleteView):
-    model = Movie
+class MovieDeleteView(DeleteView, PermissionRequiredMixin):
     permission_required = 'rentmanager.add_movie'
+    model = Movie
 
     def get_success_url(self):
         return reverse("all")
 
 
 
-class MovieRentListView(ListView):
+class MovieRentListView(ListView, PermissionRequiredMixin):
     permission_required = 'rentmanager.add_movie'
     model = MovieRent
 
@@ -136,7 +189,8 @@ def rent_movie(request, slug, id):
 
 
 
-def return_movie(request, slug, id):
+def return_movie(request, slug, id, PermissionRequiredMixin):
+    permission_required = 'rentmanager.add_movie'
     movie = Movie.objects.get(slug=slug)
     movierent = MovieRent.objects.get(id=id)
 

@@ -2,37 +2,78 @@
 {% load widget_tweaks %}
 {% load static %}
 {% block content %}
-<form id="inline_actor_form" action="{% url 'actor-create' %}" method="post" enctype="multipart/form-data">
-  <div class="customized-form">{% csrf_token %}
-    {% for inline in form.ActorFormset %}
-
-    {{ inline.as_p }}
-    {% endfor %}
-    <button type="submit" name="button">Add new actor</button>
-  </div>
-</form>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-  <div class="customized-form">
-    {{ form.as_table }}
-    <button type="submit" name="button">Enregistrer</button>
-  <div class="form-group">
-</form>
-{% endblock %}
-
-<!-- <form id="actor_form" class="" action="{ url 'actor-create' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-  <div class="customized-form">
-    <div class="actor">
-      <p>Create new actor record:<p>
-        { form.ActorFormset.as_table }}
-      <button type="submit" name="button">Record New Actor</button>
-    </div>
-  </div>
-  <form id="movie_form" class="" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <div class="customized-form">
-      <div class="movie">
-        { form.as_table }}
-      </div>
-      <button type="submit" name="button">Enregistrer</button>
+<div class="col-12 col-sm-4">
+  <form class="inline-form" id="inline_actor_form" action="{% url 'actor-create' %}" method="post" enctype="multipart/form-data">
+    <div class="customized-form">{% csrf_token %}
+      <h3>Ajouter un acteur</h3>
+      {% for inline in form.ActorFormset %}
+      {% render_field inline.first_name class+="form-control" placeholder="Prénom" %}
+      {% render_field inline.last_name class+="form-control" placeholder="Nom" %}
+      {% render_field inline.picture class+="form-control-file" %}
+      {% endfor %}
+      <button type="submit" name="button">Ajouter</button>
     </div>
   </form>
-</form> -->
+</div>
+<div class="col-12 col-sm-4">
+  <form class="inline-form" id="inline_director_form" action="{% url 'director-create' %}" method="post" enctype="multipart/form-data">
+    <div class="customized-form">{% csrf_token %}
+      <h3>Ajouter un réalisateur</h3>
+      {% for inline in form.DirectorFormset %}
+      {% render_field inline.first_name class+="form-control" placeholder="Prénom" %}
+      {% render_field inline.last_name class+="form-control" placeholder="Nom" %}
+      {% render_field inline.picture class+="form-control-file" %}
+      {% endfor %}
+      <button type="submit" name="button">Ajouter</button>
+    </div>
+  </form>
+</div>
+<div class="col-12 col-sm-4">
+  <form class="inline-form" id="inline_country_form" action="{% url 'country-create' %}" method="post" enctype="multipart/form-data">
+    <div class="customized-form">{% csrf_token %}
+      <h3>Ajouter un pays</h3>
+      {% for inline in form.CountryFormset %}
+      {% render_field inline.name class+="form-control" placeholder="Pays" %}
+      {% endfor %}
+      <button type="submit" name="button">Ajouter</button>
+    </div>
+  </form>
+</div>
+<div class="col-12 col-sm-4">
+  <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="customized-form">
+      {% render_field form.title class+="form-control" placeholder="Titre" %}
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Genre:</span>
+        </div>
+        {% render_field form.genre class+="form-control" %}
+      </div>
+      {% render_field form.release_date class+="form-control" placeholder="Date de sortie" %}
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Pays:</span>
+        </div>
+        {% render_field form.country class+="form-control" %}
+      </div>
+      {% render_field form.length class+="form-control" placeholder="Durée" %}
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Réalisateur:</span>
+        </div>
+        {% render_field form.director class+="form-control" %}
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Acteurs:</span>
+        </div>
+        {% render_field form.actors class+="form-control" %}
+      </div>
+      {% render_field form.picture class+="form-control-file" placeholder="Image" %}
+      {% render_field form.synopsis class+="form-control" placeholder="Résumé" %}
+      {% render_field form.trailer_url class+="form-control" placeholder="Url bande-annonce" %}
+      <button type="submit" name="button">Enregistrer</button>
+      <div class="form-group">
+      </form>
+</div>
+{% endblock %}

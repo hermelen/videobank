@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#inline_actor_form').submit(function(event){
+  $('.inline_form').submit(function(event){
     event.preventDefault();
     var url = $(this).attr('action');
     $.ajax({
@@ -8,17 +8,23 @@ $(document).ready(function(){
       data: $(this).serialize(),
       success: function(response){
         console.log('success');
-        console.log(response);
+        if ( response.type == "actor" ) {
+          $("#id_actor").append(`
+            <option value="${response.pk}" selected>${response.last_name.toUpperCase()} ${ response.last_name.charAt(0).toUpperCase() + response.last_name.slice(1) }</option>
+          `)
+        } else if ( response.type == "director" ) {
+          $("#id_director").append(`
+            <option value="${response.pk}" selected>${response.last_name.toUpperCase()} ${ response.last_name.charAt(0).toUpperCase() + response.last_name.slice(1) }</option>
+          `)
+        } else {
+          $("#id_country").append(`
+            <option value="${response.pk}" selected>${response.name.toUpperCase()}</option>
+          `)
+        }
       },
       error: function(response){
         console.log('error');
-        console.log(response);
       }
     })
   })
 })
-
-
-// $('#id_actors').append(`
-//   <option value="${response.pk}" selected>${response.last_name.toUpperCase()} ${ response.last_name.charAt(0).toUpperCase() + response.last_name.slice(1) }</option>
-// `)

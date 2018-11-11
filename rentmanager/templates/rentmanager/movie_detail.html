@@ -27,12 +27,13 @@
     {% if movie.rented == False %}
     <a href="#" class="card-link">Réserver</a>
     {% else %}
-    <p>LOUÉ</p>
+    <a href="#" class="card-link">LOUÉ</a>
     {% endif %}
-    <a href="{{ movie.trailer_url }}">Trailer</a>
-  </div>
-  <div class="card-body">
+    {% if perms.rentmanager and perms.rentmanager.add_movie %}
     <a href="{% url 'movie-update' movie.slug %}">Modifier</a>
+    {% else %}
+    <a href="{{ movie.trailer_url }}">Trailer</a>
+    {% endif %}
   </div>
 </div>
 

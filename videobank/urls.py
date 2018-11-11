@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 
 from rentmanager.views import MovieListView, RentedListView, AvailableListView
 from rentmanager.views import MovieDetailView, MovieUpdateView, MovieCreateView, MovieDeleteView
-from rentmanager.views import ActorCreateView, MovieRentListView
+from rentmanager.views import ActorCreateView, DirectorCreateView, CountryCreateView, MovieRentListView
 from rentmanager.views import rent_movie, return_movie
 
 # from userena import views as userena_views
@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
+    url(r'^director/create/', DirectorCreateView.as_view(), name='director-create'),
+    url(r'^country/create/', CountryCreateView.as_view(), name='country-create'),
     # movie list
     url(r'^rented/', RentedListView.as_view(), name='rented'),
     url(r'^movies$', MovieListView.as_view(), name='all'),

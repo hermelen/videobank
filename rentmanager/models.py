@@ -25,8 +25,8 @@ class MovieGenre(models.Model):
 
 
 class Actor(models.Model):
-    first_name = models.CharField(max_length=100, verbose_name="Prénom", default='unknown')
-    last_name  = models.CharField(max_length=100, verbose_name="Nom", default='unknown')
+    first_name = models.CharField(max_length=100, verbose_name="Prénom")
+    last_name  = models.CharField(max_length=100, verbose_name="Nom")
     picture    = models.ImageField(null=True, blank=True, upload_to="actors", verbose_name="Photo")
 
 
@@ -41,7 +41,8 @@ class Director(models.Model):
     picture    = models.ImageField(null=True, blank=True, upload_to="directors", verbose_name="Photo")
 
     def __unicode__(self):
-        return self.last_name
+        display_name = self.last_name.upper() + ' ' + self.first_name.capitalize()
+        return display_name
 
 
 
@@ -62,10 +63,10 @@ class Movie(models.Model):
     lenght       = models.TimeField(max_length=100, verbose_name="Durée", null=True, blank=True)
     picture      = models.ImageField(null=True, upload_to="covers", verbose_name="Photo")
     release_date = models.DateTimeField()
-    rented       = models.BooleanField()
+    rented       = models.BooleanField(default=False)
     slug         = AutoSlugField(populate_from='title', verbose_name="Slug", null=True, blank=True, unique=True)
     synopsis     = models.TextField(null=True, blank=True)
-    title        = models.CharField(max_length=100, verbose_name="Titre", default='unknown')
+    title        = models.CharField(max_length=100, verbose_name="Titre")
     trailer_url  = models.URLField( null=True, blank=True)
 
     def __unicode__(self):
