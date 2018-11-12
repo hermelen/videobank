@@ -25,11 +25,14 @@ from rentmanager.views import MovieDetailView, MovieUpdateView, MovieCreateView,
 from rentmanager.views import ActorCreateView, DirectorCreateView, CountryCreateView, MovieRentListView
 from rentmanager.views import rent_movie, return_movie
 
+from django.conf.urls.i18n import i18n_patterns
+
 # from userena import views as userena_views
-
-urlpatterns = [
+urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
+)
 
+urlpatterns += [
     url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
     url(r'^director/create/', DirectorCreateView.as_view(), name='director-create'),
     url(r'^country/create/', CountryCreateView.as_view(), name='country-create'),

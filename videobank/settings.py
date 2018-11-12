@@ -73,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware' # for internationalisation
 ]
 
 ROOT_URLCONF = 'videobank.urls'
@@ -128,8 +129,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
-
+from django.utils.translation import ugettext_lazy as _
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('en', _('English')),
+    ('fr', _('French')),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -158,6 +163,6 @@ LOGOUT_URL ="/logout"
 LOGIN_REDIRECT_URL = '/'
 
 USERENA_ACTIVATION_REQUIRED = False
-USERENA_SIGNIN_AFTER_SIGNUP = True 
+USERENA_SIGNIN_AFTER_SIGNUP = True
 
 from extra_settings import *
