@@ -1,3 +1,17 @@
+div.round-img-container {
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  border-radius: 50%;
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
 div.customized-row {
   display: flex;
   justify-content: center;
@@ -10,6 +24,7 @@ div.customized-row {
   }
   // ------------------------------- movie_detail.html
   div.detail-card {
+    width: 100%;
     h5 {
       text-align: center;
     }
@@ -18,12 +33,19 @@ div.customized-row {
       justify-content: space-around;
       flex-wrap: wrap;
     }
-    img.float-image {
+    img.card-image {
+
     }
     ul {
       padding-left: 0;
       li {
         list-style: none;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+        div {
+          margin-right: 1em;
+        }
       }
     }
   }

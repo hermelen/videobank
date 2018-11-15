@@ -29,8 +29,10 @@ from django.db.models import Q
 
 from django.template import loader
 
+from parler.views import TranslatableSlugMixin
+
 # Create your views here.
-class RentedListView(ListView, PermissionRequiredMixin):
+class RentedListView(PermissionRequiredMixin, ListView):
     permission_required = 'rentmanager.add_movie'
     model = Movie
 
@@ -46,19 +48,19 @@ class AvailableListView(ListView):
         return queryset
 
 
-class MovieListView(ListView, PermissionRequiredMixin):
+class MovieListView(PermissionRequiredMixin, ListView):
     permission_required = 'rentmanager.add_movie'
     model = Movie
 
 
 
-class MovieDetailView(DetailView):
+class MovieDetailView(TranslatableSlugMixin, DetailView):
     model = Movie
 
 
 
 @method_decorator(csrf_exempt, name = 'dispatch')
-class ActorCreateView(CreateView, PermissionRequiredMixin):
+class ActorCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'rentmanager.add_movie'
     model = Actor
     form_class = ActorForm
@@ -87,7 +89,7 @@ class ActorCreateView(CreateView, PermissionRequiredMixin):
 
 
 @method_decorator(csrf_exempt, name = 'dispatch')
-class DirectorCreateView(CreateView, PermissionRequiredMixin):
+class DirectorCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'rentmanager.add_movie'
     model = Director
     form_class = DirectorForm
@@ -116,7 +118,7 @@ class DirectorCreateView(CreateView, PermissionRequiredMixin):
 
 
 @method_decorator(csrf_exempt, name = 'dispatch')
-class CountryCreateView(CreateView, PermissionRequiredMixin):
+class CountryCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'rentmanager.add_movie'
     model = Country
     form_class = CountryForm
@@ -139,7 +141,7 @@ class CountryCreateView(CreateView, PermissionRequiredMixin):
 
 
 
-class MovieCreateView(CreateWithInlinesView, PermissionRequiredMixin):
+class MovieCreateView(PermissionRequiredMixin, CreateWithInlinesView):
     permission_required = 'rentmanager.add_movie'
     model = Movie
     form_class = MovieForm
@@ -150,7 +152,7 @@ class MovieCreateView(CreateWithInlinesView, PermissionRequiredMixin):
 
 
 
-class MovieUpdateView(UpdateView, PermissionRequiredMixin):
+class MovieUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'rentmanager.add_movie'
     model = Movie
     fields = "__all__"
@@ -160,7 +162,7 @@ class MovieUpdateView(UpdateView, PermissionRequiredMixin):
 
 
 
-class MovieDeleteView(DeleteView, PermissionRequiredMixin):
+class MovieDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'rentmanager.add_movie'
     model = Movie
 
@@ -169,7 +171,7 @@ class MovieDeleteView(DeleteView, PermissionRequiredMixin):
 
 
 
-class MovieRentListView(ListView, PermissionRequiredMixin):
+class MovieRentListView(PermissionRequiredMixin, ListView):
     permission_required = 'rentmanager.add_movie'
     model = MovieRent
 
@@ -177,21 +179,21 @@ class MovieRentListView(ListView, PermissionRequiredMixin):
 
 def rent_movie(request, slug, id):
     model = MovieRent
-    movie = Movie.objects.get(slug=slug)
-    customer = Customer.objects.get(id=id)
-
+    movie = Movie.objects.translated(slug=slug).first()
+    user = User.objects.get(id=id)
+    customer = Customer.objects.get(user=user)
     movie.rented = True
     movie.save()
 
     new_rent = MovieRent(movies=movie, customer=customer)
     new_rent.save()
     return redirect("userena_profile_detail", username=customer.user.username)
+    return redirect("availables")
 
 
 
-def return_movie(request, slug, id, PermissionRequiredMixin):
-    permission_required = 'rentmanager.add_movie'
-    movie = Movie.objects.get(slug=slug)
+def return_movie(request, slug, id):
+    movie = Movie.objects.translated(slug=slug).first()
     movierent = MovieRent.objects.get(id=id)
 
     movie.rented = False

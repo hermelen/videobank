@@ -1,0 +1,258 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-12 16:06+0100\n"
+"PO-Revision-Date: 2018-11-12 16:06+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: rentmanager/models.py:21
+msgid "user"
+msgstr "utilisateur"
+
+#: rentmanager/models.py:24
+msgid "customer"
+msgstr "client"
+
+#: rentmanager/models.py:30 rentmanager/models.py:38 rentmanager/models.py:89
+msgid "genre"
+msgstr "genre"
+
+#: rentmanager/models.py:31 rentmanager/models.py:87
+msgid "slug"
+msgstr "slug"
+
+#: rentmanager/models.py:42 rentmanager/models.py:56
+msgid "first name"
+msgstr "prénom"
+
+#: rentmanager/models.py:43 rentmanager/models.py:57
+msgid "last name"
+msgstr "nom"
+
+#: rentmanager/models.py:44 rentmanager/models.py:58 rentmanager/models.py:94
+msgid "picture"
+msgstr "image"
+
+#: rentmanager/models.py:52
+msgid "actor"
+msgstr "acteur"
+
+#: rentmanager/models.py:65 rentmanager/models.py:92
+#: rentmanager/templates/rentmanager/movie_detail.html:17
+msgid "director"
+msgstr "réalisateur"
+
+#: rentmanager/models.py:71
+msgid "name"
+msgstr "nom"
+
+#: rentmanager/models.py:78 rentmanager/models.py:91
+#: rentmanager/templates/rentmanager/movie_detail.html:12
+msgid "country"
+msgstr "pays"
+
+#: rentmanager/models.py:79
+#, fuzzy
+#| msgid "country"
+msgid "countries"
+msgstr "pays"
+
+#: rentmanager/models.py:85
+msgid "title"
+msgstr "titre"
+
+#: rentmanager/models.py:86
+msgid "synopsis"
+msgstr "synopsis"
+
+#: rentmanager/models.py:90
+#: rentmanager/templates/rentmanager/movie_detail.html:24
+msgid "actors"
+msgstr "acteurs"
+
+#: rentmanager/models.py:93
+msgid "lenght"
+msgstr "durée"
+
+#: rentmanager/models.py:95
+#: rentmanager/templates/rentmanager/movie_detail.html:13
+msgid "release date"
+msgstr "date de sortie"
+
+#: rentmanager/models.py:96
+#: rentmanager/templates/rentmanager/movie_detail.html:42
+#: rentmanager/templates/rentmanager/movie_list.html:24
+msgid "rented"
+msgstr "loué"
+
+#: rentmanager/models.py:97
+msgid "trailer url"
+msgstr "url bande-annonce"
+
+#: rentmanager/models.py:106
+msgid "movie"
+msgstr "film"
+
+#: rentmanager/models.py:117
+msgid "rent"
+msgstr "location"
+
+#: rentmanager/templates/rentmanager/movie_detail.html:11
+msgid "category"
+msgstr "catégorie"
+
+#: rentmanager/templates/rentmanager/movie_detail.html:14
+msgid "length"
+msgstr "durée"
+
+#: rentmanager/templates/rentmanager/movie_detail.html:40
+#: rentmanager/templates/rentmanager/movie_list.html:27
+msgid "book"
+msgstr "réserver"
+
+#: rentmanager/templates/rentmanager/movie_detail.html:45
+#: rentmanager/templates/rentmanager/movie_list.html:20
+msgid "modify"
+msgstr "modifier"
+
+#: rentmanager/templates/rentmanager/movie_detail.html:47
+msgid "trailer"
+msgstr "bande-annonce"
+
+#: rentmanager/templates/rentmanager/movie_list.html:21
+msgid "delete"
+msgstr "supprimer"
+
+#: rentmanager/templates/rentmanager/movie_list.html:31
+msgid "see more"
+msgstr "voir plus"
+
+#: rentmanager/templates/rentmanager/navbar.html:3
+msgid "Daddy's VHS"
+msgstr "La VHS à Papa"
+
+#: rentmanager/templates/rentmanager/navbar.html:12
+msgid "hi"
+msgstr "salut"
+
+#: rentmanager/templates/rentmanager/navbar.html:14
+msgid "connection"
+msgstr "connexion"
+
+#: rentmanager/templates/rentmanager/navbar.html:19
+msgid "signout"
+msgstr "déconnexion"
+
+#: rentmanager/templates/rentmanager/navbar.html:20
+msgid "profile"
+msgstr "profil"
+
+#: rentmanager/templates/rentmanager/navbar.html:22
+msgid "signin"
+msgstr "connexion"
+
+#: rentmanager/templates/rentmanager/navbar.html:23
+msgid "signup"
+msgstr "inscription"
+
+#: rentmanager/templates/rentmanager/navbar.html:31
+#: rentmanager/templates/rentmanager/navbar.html:41
+msgid "movies"
+msgstr "films"
+
+#: rentmanager/templates/rentmanager/navbar.html:35
+msgid "add a film"
+msgstr "ajouter un film"
+
+#: rentmanager/templates/rentmanager/navbar.html:36
+msgid "rented movies"
+msgstr "films loués"
+
+#: rentmanager/templates/rentmanager/navbar.html:37
+msgid "available movies"
+msgstr "films disponibles"
+
+#: rentmanager/templates/rentmanager/navbar.html:38
+msgid "all movies"
+msgstr "tous les films"
+
+#: rentmanager/templates/rentmanager/navbar.html:39
+msgid "rents"
+msgstr "locations"
+
+#: rentmanager/templates/userena/profile_detail.html:4
+#, python-format
+msgid "%(username)s's profile."
+msgstr ""
+
+#: rentmanager/templates/userena/profile_detail.html:14
+msgid "View profile"
+msgstr "Voir profil"
+
+#: rentmanager/templates/userena/profile_detail.html:15
+msgid "Edit details"
+msgstr "Modifier mes infos"
+
+#: rentmanager/templates/userena/profile_detail.html:16
+msgid "Change password"
+msgstr "Changer de mot de passe"
+
+#: rentmanager/templates/userena/profile_detail.html:17
+msgid "Change email"
+msgstr "Changer d'e-mail"
+
+#: rentmanager/templates/userena/profile_detail.html:25
+msgid "Your mugshot"
+msgstr "Votre avatar"
+
+#: rentmanager/templates/userena/profile_detail.html:29
+msgid "username"
+msgstr "pseudo"
+
+#: rentmanager/templates/userena/profile_detail.html:33
+msgid "Name"
+msgstr "Nom"
+
+#: rentmanager/templates/userena/profile_detail.html:37
+msgid "Email"
+msgstr "E-mail"
+
+#: rentmanager/templates/userena/profile_detail.html:41
+msgid "Age"
+msgstr "Age"
+
+#: rentmanager/templates/userena/profile_detail.html:45
+msgid "Website"
+msgstr "Site web"
+
+#: rentmanager/templates/userena/profile_detail.html:49
+msgid "Location"
+msgstr "Localisation"
+
+#: rentmanager/templates/userena/profile_detail.html:53
+msgid "About me"
+msgstr "A propos de moi"
+
+#: videobank/settings.py:136
+msgid "English"
+msgstr "Anglais"
+
+#: videobank/settings.py:137
+msgid "French"
+msgstr "Français"
+
+#~ msgid "last_name"
+#~ msgstr "nom"

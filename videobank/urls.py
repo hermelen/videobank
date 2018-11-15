@@ -30,9 +30,7 @@ from django.conf.urls.i18n import i18n_patterns
 # from userena import views as userena_views
 urlpatterns = i18n_patterns(
     url(r'^admin/', admin.site.urls),
-)
 
-urlpatterns += [
     url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
     url(r'^director/create/', DirectorCreateView.as_view(), name='director-create'),
     url(r'^country/create/', CountryCreateView.as_view(), name='country-create'),
@@ -54,4 +52,31 @@ urlpatterns += [
     url(r'^return/(?P<slug>[-\w]+)/(?P<id>[-\w]+)/$', return_movie, name='return'),
 
     url(r'^$', AvailableListView.as_view(), name='availables'),
+)
+
+
+urlpatterns += [
+    # url(r'^admin/', admin.site.urls),
+    #
+    # url(r'^actor/create/', ActorCreateView.as_view(), name='actor-create'),
+    # url(r'^director/create/', DirectorCreateView.as_view(), name='director-create'),
+    # url(r'^country/create/', CountryCreateView.as_view(), name='country-create'),
+    # # movie list
+    # url(r'^rented/', RentedListView.as_view(), name='rented'),
+    # url(r'^movies$', MovieListView.as_view(), name='all'),
+    # # movie edit
+    # url(r'^movie/create/', MovieCreateView.as_view(), name='movie-create'),
+    # #movie detail
+    # url(r'^movie/(?P<slug>[-\w]+)/edit/$', MovieUpdateView.as_view(), name='movie-update'),
+    # url(r'^movie/(?P<slug>[-\w]+)/delete/$', MovieDeleteView.as_view(), name='movie-delete'),
+    # url(r'^movie/(?P<slug>[-\w]+)/$', MovieDetailView.as_view(), name='movie-detail'),
+    # # userena
+    # url(r'^accounts/', include('userena.urls')),
+    # # rent list
+    # url(r'^rent/list/', MovieRentListView.as_view(), name='rentmovie-list'),
+    # # rent action
+    # url(r'^rent/(?P<slug>[-\w]+)/(?P<id>[-\w]+)/$', rent_movie, name='rent'),
+    # url(r'^return/(?P<slug>[-\w]+)/(?P<id>[-\w]+)/$', return_movie, name='return'),
+    #
+    # url(r'^$', AvailableListView.as_view(), name='availables'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

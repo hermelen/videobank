@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django.contrib.sites', # for userena
+    'django_extensions',
 
     'rentmanager',
 
+    'parler',
     'userena', # for userena
     'guardian', # for userena
     'easy_thumbnails', # for userena
@@ -96,7 +98,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'videobank.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -130,11 +131,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 from django.utils.translation import ugettext_lazy as _
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 LANGUAGES = [
     ('en', _('English')),
     ('fr', _('French')),
 ]
+
+LOCALE_PATHS = (
+    BASE_DIR + '/locale', )
+
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'en',},
+        {'code': 'fr',},
+    ),
+    'default': {
+        'fallback': 'en',             # defaults to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,   # the default; let .active_translations() return fallbacks too.
+    }
+}
+
 
 TIME_ZONE = 'UTC'
 

@@ -1,12 +1,14 @@
 {% extends "rentmanager/base.html" %}
 {% load static %}
+{% load i18n %}
+{% load parler_tags %}
 {% block content %}
 
 {% for movie in object_list %}
 <div class="card list-card">
   <img class="card-img-top" src="{{ movie.picture.url }}" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">{{ movie.title }}</h5>
+    <h5 class="card-title">{{ movie.title|capfirst }}</h5>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">{{ movie.genre }}</li>
@@ -15,19 +17,18 @@
   </ul>
   <div class="card-body">
     {% if perms.rentmanager and perms.rentmanager.add_movie %}
-    <a href="{% url 'movie-update' movie.slug %}" class="btn btn-warning">Modifier</a>
-    <a href="{% url 'movie-delete' movie.slug %}" class="btn btn-danger">Supprimer</a>
+    <a href="{% url 'movie-update' movie.slug %}" class="btn btn-warning">{% trans "modify" as rel %}{{ rel|capfirst }}</a>
+    <a href="{% url 'movie-delete' movie.slug %}" class="btn btn-danger">{% trans "delete" as rel %}{{ rel|capfirst }}</a>
     {% else %}
-      <a href="{% url 'movie-detail' movie.slug %}" class="btn btn-primary">Voir plus</a>
       {% if movie.rented == True %}
-      <a href="#" class="btn btn-danger">Loué</a>
+      <a href="#" class="btn btn-danger">{% trans "rented"  as rel%}{{ rel|upper }}</a>
       {% else %}
         {% if request.user.is_authenticated %}
-        <a href="{% url 'rent' movie.slug request.user.id %}" class="btn btn-success">Réserver</a>
+        <a href="{% url 'rent' movie.slug request.user.id %}" class="btn btn-success">{% trans "book" as rel %}{{ rel|capfirst }}</a>
         {% endif %}
       {% endif %}
     {% endif %}
-
+    <a href="{% url 'movie-detail' movie|get_translated_field:'slug' %}" class="btn btn-primary">{% trans "see more" as rel %}{{ rel|capfirst }}</a>
   </div>
 </div>
 {% endfor %}

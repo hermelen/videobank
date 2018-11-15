@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from .models import Customer, MovieGenre, Actor, Movie, MovieRent, Director, Country
+from parler.admin import TranslatableAdmin
 
 # Register your models here.
 
@@ -10,7 +11,7 @@ from .models import Customer, MovieGenre, Actor, Movie, MovieRent, Director, Cou
 #     list_display = ('user')
 
 
-class MovieGenreAdmin(admin.ModelAdmin):
+class MovieGenreAdmin(TranslatableAdmin):
     list_display = ('label', 'slug')
 
 
@@ -20,9 +21,8 @@ class ActorAdmin(admin.ModelAdmin):
 
 
 
-class MovieAdmin(admin.ModelAdmin):
+class MovieAdmin(TranslatableAdmin):
     list_display = ('title', 'genre', 'country', 'director', 'lenght', 'picture', 'release_date', 'rented', 'slug', 'synopsis', 'trailer_url')
-
 
 
 class MovieRentAdmin(admin.ModelAdmin):
@@ -35,7 +35,7 @@ class DirectorAdmin(admin.ModelAdmin):
 
 
 
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(TranslatableAdmin):
     list_display = ('name',)
 
 

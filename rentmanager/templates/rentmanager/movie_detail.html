@@ -1,38 +1,50 @@
 {% extends "rentmanager/base.html" %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 
 <div class="card detail-card">
-  <h5 class="card-title">{{ movie.title }}</h5>
+  <h5 class="card-title">{{ movie.title|capfirst }}</h5>
   <div class="card-body">
-    <img class="float-image" src="{{ movie.picture.url }}" alt="">
-      <ul>
-        <li class="">Catégorie: {{ movie.genre }}</li>
-        <li class="">Pays: {{ movie.country.name }}</li>
-        <li class="">Date de sortie: {{ movie.release_date|date:'d-m-Y' }}</li>
-        <li class="">Durée: {{ movie.lenght|date:'H:i' }}</li>
-      </ul>
-      <ul>
-        <li class="">Réalisateur: {{ movie.director.first_name.capitalize }} {{ movie.director.last_name.capitalize }}</li>
-        <li class="">Acteurs:</li>
-        {% for actor in movie.actors.all %}
-        <li class="">- {{ actor.first_name.capitalize }} {{ actor.last_name.capitalize }}</li>
-        {% endfor %}
-      </ul>
+    <img class="card-image" src="{{ movie.picture.url }}" alt="">
+    <ul>
+      <li class="">{% trans "category" as rel %}{{ rel|capfirst }}: {{ movie.genre }}</li>
+      <li class="">{% trans "country" as rel %}{{ rel|capfirst }}: {{ movie.country.name }}</li>
+      <li class="">{% trans "release date" as rel %}{{ rel|capfirst }}: {{ movie.release_date|date:'d-m-Y' }}</li>
+      <li class="">{% trans "length" as rel %}{{ rel|capfirst }}: {{ movie.lenght|date:'H:i' }}</li>
+    </ul>
+    <ul>
+      <li class="">{% trans "director" as rel %}{{ rel|capfirst }}:</li>
+      <li class="">
+        <div class="round-img-container">
+          <img class="" src="{{ movie.director.picture.url }}" alt="">
+        </div>
+        {{ movie.director.first_name.capitalize }} {{ movie.director.last_name.capitalize }}
+      </li>
+      <li class="">{% trans "actors" as rel %}{{ rel|capfirst }}:</li>
+      {% for actor in movie.actors.all %}
+      <li class="">
+        <div class="round-img-container">
+          <img class="" src="{{ actor.picture.url }}" alt="">
+        </div>
+        {{ actor.first_name.capitalize }} {{ actor.last_name.capitalize }}
+      </li>
+      {% endfor %}
+    </ul>
   </div>
   <div class="card-body">
     <p class="">{{ movie.synopsis }}</p>
   </div>
   <div class="card-body">
     {% if movie.rented == False %}
-    <a href="#" class="card-link">Réserver</a>
+    <a href="#" class="card-link">{% trans "book" as rel %}{{ rel|capfirst }}</a>
     {% else %}
-    <a href="#" class="card-link">LOUÉ</a>
+    <a href="#" class="card-link">{% trans "rented"  as rel%}{{ rel|upper }}</a>
     {% endif %}
     {% if perms.rentmanager and perms.rentmanager.add_movie %}
-    <a href="{% url 'movie-update' movie.slug %}">Modifier</a>
+    <a href="{% url 'movie-update' movie.slug %}">{% trans "modify" as rel %}{{ rel|capfirst }}</a>
     {% else %}
-    <a href="{{ movie.trailer_url }}">Trailer</a>
+    <a href="{{ movie.trailer_url }}">{% trans "trailer" as rel %}{{ rel|capfirst }}</a>
     {% endif %}
   </div>
 </div>
